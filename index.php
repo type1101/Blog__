@@ -42,5 +42,5 @@ session_start();
     - enregistrer un nouveau post
     - gérer la déconnexion
 */
-require_once 'controllers/postControllers.php';
+require_once 'controllers/userControllers.php';
 ?>
