@@ -1,0 +1,69 @@
+TP PHP MVC — Faire évoluer le blog
+
+Dans ce TP, vous allez reprendre le blog MVC réalisé en cours et le faire évoluer pour ajouter deux nouvelles fonctionnalités importantes. La première consiste à permettre à un visiteur de créer son propre compte grâce à une interface d’inscription. La seconde consiste à permettre à un utilisateur connecté d’ajouter une image lorsqu’il publie un post. L’objectif est de continuer à respecter l’architecture MVC mise en place en cours. Il ne faut donc pas écrire tout le code dans un seul fichier ni casser l’organisation actuelle du projet.
+
+Le travail demandé doit être réalisé en conservant la structure générale du projet. Votre application repose déjà sur plusieurs dossiers séparés, avec un dossier pour la configuration, un dossier pour les modèles, un dossier pour les contrôleurs, un dossier pour les vues et un dossier pour les ressources statiques. Cette organisation doit être conservée. Le but du TP est justement de montrer que l’on peut faire évoluer une application bien structurée sans repartir de zéro.
+
+Première partie : ajout du système d’inscription
+
+Vous devez créer une fonctionnalité permettant à un nouvel utilisateur de s’inscrire sur le blog. Cette inscription doit se faire à l’aide d’un formulaire HTML accessible depuis la navigation du site. Lorsqu’un visiteur remplit ce formulaire, ses informations doivent être récupérées par votre application, vérifiées, puis enregistrées dans la base de données. L’utilisateur doit ensuite pouvoir se connecter avec son compte via l’interface de connexion déjà présente dans le projet.
+
+Le mot de passe ne doit jamais être enregistré en clair dans la base de données. Il doit être sécurisé en PHP avant l’insertion grâce à la fonction adaptée vue en cours. Lors de la connexion, la comparaison avec le mot de passe saisi devra donc se faire avec la fonction prévue pour vérifier un hash. Cette partie est essentielle, car elle fait partie des bonnes pratiques de sécurité d’un site web professionnel.
+
+Le système d’inscription doit respecter le principe du MVC. Cela signifie que vous devrez réfléchir à l’endroit où placer chaque élément. Le formulaire d’inscription devra se trouver dans une vue. Le traitement des données du formulaire devra être réalisé dans le contrôleur. L’insertion de l’utilisateur dans la base de données devra passer par une fonction dédiée dans le modèle. Vous devrez également mettre à jour la navigation pour ajouter un lien vers la page d’inscription lorsque l’utilisateur n’est pas connecté.
+
+Vous devrez également penser aux contrôles nécessaires. Il faudra vérifier que tous les champs obligatoires sont bien remplis. Il faudra aussi vérifier qu’un utilisateur n’existe pas déjà avec la même adresse email. Le message affiché à l’écran devra être clair et compréhensible pour l’utilisateur. En cas d’erreur, le formulaire devra être réaffiché proprement.
+
+Indications pour l’inscription
+
+Pour vous aider, vous pouvez commencer par vous demander quels fichiers doivent être ajoutés ou modifiés. Il vous faudra très probablement créer une nouvelle vue pour le formulaire d’inscription, par exemple dans le dossier des vues liées aux utilisateurs. Il faudra aussi enrichir le modèle existant pour ajouter une fonction permettant de créer un utilisateur en base de données. Enfin, le contrôleur devra être mis à jour pour gérer l’affichage du formulaire d’inscription et le traitement du formulaire lorsque celui-ci est envoyé.
+
+Vous pouvez également réfléchir à la navigation. Pour le moment, votre site permet déjà de se connecter. Il faut désormais permettre aussi de s’inscrire. Il sera donc nécessaire de mettre à jour le header afin d’y ajouter un lien vers l’inscription. Une fois l’utilisateur connecté, ce lien n’a plus forcément de sens. Vous pouvez donc adapter l’affichage de la navigation selon l’état de la session.
+
+Deuxième partie : ajout d’une image dans un post
+
+La deuxième évolution du projet consiste à modifier le formulaire de création de post afin qu’un utilisateur puisse envoyer une image avec sa publication. Pour cela, il ne suffira plus de saisir un simple chemin texte. L’utilisateur devra pouvoir choisir un fichier image depuis son ordinateur grâce à un champ de type fichier dans le formulaire.
+
+Vous devrez donc modifier le formulaire de création de post afin qu’il accepte l’envoi de fichiers. Vous devrez ensuite traiter ce fichier en PHP dans le contrôleur. L’image devra être enregistrée dans un dossier du projet prévu pour recevoir les fichiers envoyés par les utilisateurs. Une fois le fichier déplacé dans ce dossier, son chemin devra être enregistré dans la base de données afin de pouvoir être affiché ensuite dans les posts.
+
+Là encore, il faudra respecter le MVC. Le formulaire sera affiché dans une vue, mais le traitement du fichier devra être réalisé côté contrôleur. Le modèle ne devra pas déplacer le fichier lui-même ; son rôle sera uniquement d’enregistrer les bonnes informations dans la base.
+
+Contraintes obligatoires pour les images
+
+Toutes les images ne doivent pas être acceptées. Vous devez limiter les formats autorisés afin d’éviter les fichiers inadaptés ou dangereux. Les formats autorisés seront les formats d’image classiques utilisés sur le web. Vous devez également mettre en place une limite de taille maximale afin d’éviter qu’un utilisateur n’envoie un fichier beaucoup trop lourd. Cette limite vous permettra d’éviter d’alourdir inutilement le site et de garder des uploads raisonnables.
+
+Vous devrez donc vérifier au minimum deux choses avant d’accepter le fichier. La première est le type ou l’extension du fichier. La seconde est sa taille. Si le fichier ne respecte pas les contraintes, vous devrez afficher un message d’erreur clair et empêcher l’enregistrement du post.
+
+Il faudra aussi penser au nom du fichier. Si vous enregistrez directement le nom d’origine, vous risquez d’avoir des conflits entre plusieurs fichiers portant le même nom. Il est donc conseillé de générer un nouveau nom unique avant de déplacer le fichier dans le dossier de destination.
+
+Indications pour l’upload d’image
+
+Pour cette partie, vous devrez modifier la vue du formulaire de création de post. Il faudra ajouter un champ permettant de sélectionner un fichier image et adapter la balise <form> pour autoriser l’envoi de fichiers. Du côté du contrôleur, vous devrez récupérer les informations du fichier envoyé, vérifier qu’il n’y a pas d’erreur d’upload, contrôler son extension, contrôler sa taille, puis enregistrer le fichier dans un dossier adapté. Enfin, vous devrez enregistrer dans la base de données le chemin du fichier pour que l’image puisse être affichée dans la vue des posts.
+
+Pensez également à l’organisation du projet. Les images fixes du site peuvent rester dans un dossier assets, mais les images envoyées par les utilisateurs doivent être enregistrées dans un autre dossier, par exemple un dossier uploads. Cette distinction est importante car elle permet de bien séparer les ressources du site et les fichiers envoyés par les utilisateurs.
+
+Ce qui devra être mis à jour dans le reste du site
+
+Ce TP ne consiste pas seulement à créer deux nouveaux fichiers. Vous devrez adapter l’ensemble du projet pour que tout fonctionne de manière cohérente. La navigation devra être mise à jour pour proposer l’inscription. Le contrôleur devra être enrichi pour gérer de nouvelles actions. Le modèle devra contenir de nouvelles fonctions liées aux utilisateurs et aux posts avec image. Les vues devront être adaptées pour afficher correctement les formulaires et les messages d’erreur. Enfin, la vue d’affichage des posts devra être capable d’afficher l’image enregistrée si un post en possède une.
+
+Autrement dit, il faut voir ce TP comme une évolution complète de l’application, pas comme un simple ajout isolé. Une fonctionnalité web traverse toujours plusieurs couches d’un projet MVC, et c’est précisément ce que vous devez apprendre à maîtriser ici.
+
+Attendus techniques
+
+À la fin du TP, votre application devra permettre de créer un compte utilisateur, de se connecter avec ce compte, puis de publier un post contenant du texte et éventuellement une image. Le mot de passe devra être sécurisé correctement. L’image devra être limitée à certains formats et à une certaine taille. L’organisation MVC devra être respectée. Le site devra continuer à fonctionner correctement après vos modifications.
+
+Le code devra rester lisible, structuré et cohérent avec ce qui a été fait en cours. Les traitements ne doivent pas être placés directement dans les vues. Les requêtes SQL ne doivent pas être écrites dans les vues. Les contrôles de sécurité ne doivent pas être oubliés. Enfin, il faudra commenter votre code pour expliquer ce que vous faites.
+
+Conseils
+
+Avant de commencer à coder, prenez quelques minutes pour réfléchir aux fichiers que vous devrez créer et à ceux que vous devrez modifier. Essayez de tracer le chemin complet d’une action utilisateur. Par exemple, lorsqu’un visiteur clique sur “Inscription”, quel fichier est affiché ? Quand il soumet le formulaire, quel fichier reçoit les données ? Quelle fonction s’occupe de l’insertion en base ? Quelle vue est réaffichée en cas d’erreur ? Cette logique de circulation est la clé de la compréhension du MVC.
+
+Pour l’image, posez-vous la même question. Où le fichier est-il sélectionné ? Où est-il vérifié ? Où est-il déplacé ? Où son chemin est-il enregistré ? Où est-il affiché ensuite ? Si vous arrivez à répondre clairement à ces questions, c’est que vous êtes sur la bonne voie.
+
+Proposition de contraintes pour l’upload
+
+Pour garder un cadre simple et raisonnable, vous pouvez imposer que seules les images au format JPG, JPEG, PNG et WEBP soient acceptées. Vous pouvez également fixer une taille maximale de 2 Mo. Toute image dépassant cette limite ou utilisant une extension non autorisée devra être refusée avec un message d’erreur explicite.
+
+Conclusion du TP
+
+Ce TP a pour but de vous faire comprendre qu’une application web n’est pas figée. Une fois qu’une base propre a été construite, il est possible de la faire évoluer progressivement en ajoutant des fonctionnalités utiles et réalistes. L’inscription et l’upload d’image sont deux évolutions très fréquentes dans les applications web modernes. En les intégrant dans votre blog, vous transformez peu à peu votre projet en une application plus sociale, plus complète, et plus proche d’un mini réseau social.
