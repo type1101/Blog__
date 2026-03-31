@@ -60,4 +60,16 @@ require_once 'models/postModels.php';
             exit();
         }
     }
+    if (isset($_GET['action']) && $_GET['action'] == 'deletePost' && isset($_GET['post_id'])) {
+
+    if (isset($_SESSION['user'])) {
+        $post_id = (int)$_GET['post_id'];
+        deletePost($pdo, $post_id, $_SESSION['user']['id']);
+        header('Location: index.php');
+        exit();
+    } else {
+        header('Location: index.php?action=showLogin');
+        exit();
+    }
+}
 ?>

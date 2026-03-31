@@ -44,6 +44,7 @@ function getAllPosts($pdo)
             posts.content,
             posts.image_path,
             posts.created_at,
+            posts.user_id,
             users.username
         FROM posts
         INNER JOIN users ON posts.user_id = users.id
@@ -93,5 +94,13 @@ function createPost($pdo, $title, $content, $media , $user_id)
         On exécute la requête avec les valeurs reçues.
     */
     $statement->execute([$title, $content, $media, $user_id]);
+}
+
+
+function deletePost($pdo, $post_id, $user_id)
+{
+    $sql = "DELETE FROM posts WHERE id = ? AND user_id = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$post_id, $user_id]);
 }
 ?>

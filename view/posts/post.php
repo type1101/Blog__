@@ -71,6 +71,23 @@ require_once 'view/partial/header.php';
 
 
                 ?>
+                <?php
+                /*
+                    Vérifier si l'utilisateur connecté est l'auteur du post.
+                    Si oui, afficher le bouton de suppression.
+                */
+                if (isset($_SESSION['user']) && $post['user_id'] == $_SESSION['user']['id']) {
+                    ?>
+                    <div class="post-actions">
+                        <a href="index.php?action=deletePost&post_id=<?php echo $post['id']; ?>" 
+                           class="btn-delete"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?');">
+                            Supprimer
+                        </a>
+                    </div>
+                    <?php
+                }
+                ?>
             </article>
             <?php
         }
