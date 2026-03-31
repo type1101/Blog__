@@ -50,7 +50,6 @@ require_once 'controllers/postControllers.php';
 require_once 'controllers/userControllers.php';
 
 
-
 if (isset($_GET['action']) && $_GET['action'] == 'showCreate') {
     require_once 'view/posts/create.php';
 } 

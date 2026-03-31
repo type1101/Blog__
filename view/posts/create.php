@@ -49,6 +49,19 @@ require_once 'view/partial/header.php';
 
         <br>
 
+        <?php
+        /*
+            Si un message d'erreur existe, on l'affiche.
+        */
+        if ($errorMessage != '') {
+            ?>
+            <div class="error-message">
+                <p><?php echo htmlspecialchars($errorMessage); ?></p>
+            </div>
+            <?php
+        }
+        ?>
+
         <div>
             <button type="submit" name="action" value="createPost">Publier</button>
             <a href="index.php">Annuler</a>

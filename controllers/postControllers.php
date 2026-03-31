@@ -1,6 +1,7 @@
 <?php
 require_once 'models/postModels.php';
 
+$errorMessage = '';
     /*
         --------------------------------------------------------
         FORMULAIRE DE CRÉATION DE POST
@@ -19,12 +20,19 @@ require_once 'models/postModels.php';
             $title = trim($_POST['title']);
             $content = trim($_POST['content']);
             $media = null;
+            $maxSizeFile = 10 * 1024 * 1024;
             /*
                 On récupère l'identifiant de l'utilisateur connecté.
             */
             $user_id = $_SESSION['user']['id'];
 
             if (isset($_FILES['media']) && $_FILES['media']['error'] == 0) {
+                if ($_FILES['media']['size'] > $maxSizeFile) {
+                    $errorMessage = "Le fichier est trop volumineux";
+                    require_once 'view/posts/create.php';
+                    exit();
+                }
+
                 $uploadDir = 'uploads/';
                 
                 if (!is_dir($uploadDir)){
