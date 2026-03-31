@@ -60,7 +60,7 @@ require_once 'view/partial/header.php';
                 if ($post['image_path'] != null && $post['image_path'] != '') {
                     if ($video == 'mp4' || $video == 'mov') {
                         ?>
-                        <video class="video" controls = "controls" src="<?php echo htmlspecialchars($post['image_path']); ?>"></video>
+                        <video controls = "controls" src="<?php echo htmlspecialchars($post['image_path']); ?>" style = "width: 100%;"></video>
                         <?php
                     } else {
                         ?>

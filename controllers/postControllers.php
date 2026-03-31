@@ -6,7 +6,7 @@ require_once 'models/postModels.php';
         FORMULAIRE DE CRÉATION DE POST
         --------------------------------------------------------
     */
-    if  ($_POST['action'] == 'createPost') {
+    if (isset($_POST['action']) && $_POST['action'] == 'createPost') {
 
         /*
             On vérifie que l'utilisateur est connecté.
@@ -48,12 +48,7 @@ require_once 'models/postModels.php';
                 header('Location: index.php');
                 exit();
                 
-            } else {
-                    require_once 'view/posts/create.php';
-                    exit();
-                }
-            
-
+            }
         } else {
             header('Location: index.php?action=showLogin');
             exit();

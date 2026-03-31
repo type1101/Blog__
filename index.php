@@ -43,6 +43,19 @@ session_start();
     - enregistrer un nouveau post
     - gérer la déconnexion
 */
-require_once 'controllers/userControllers.php';
+
+require_once 'config/database.php';
+
 require_once 'controllers/postControllers.php';
+require_once 'controllers/userControllers.php';
+
+
+
+if (isset($_GET['action']) && $_GET['action'] == 'showCreate') {
+    require_once 'view/posts/create.php';
+} 
+else {
+    $posts = getAllPosts($pdo);
+    require_once 'view/posts/post.php';
+}
 ?>

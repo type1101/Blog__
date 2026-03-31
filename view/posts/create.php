@@ -51,6 +51,7 @@ require_once 'view/partial/header.php';
 
         <div>
             <button type="submit" name="action" value="createPost">Publier</button>
+            <a href="index.php">Annuler</a>
         </div>
     </form>
 </main>
