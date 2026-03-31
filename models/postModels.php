@@ -73,7 +73,7 @@ function getAllPosts($pdo)
     Ajouter un nouveau post dans la base de données
     ============================================================
 */
-function createPost($pdo, $title, $content, $image_path, $user_id)
+function createPost($pdo, $title, $content, $media , $user_id)
 {
     /*
         On prépare une requête SQL avec des paramètres.
@@ -92,6 +92,6 @@ function createPost($pdo, $title, $content, $image_path, $user_id)
     /*
         On exécute la requête avec les valeurs reçues.
     */
-    $statement->execute([$title, $content, $image_path, $user_id]);
+    $statement->execute([$title, $content, $media, $user_id]);
 }
 ?>

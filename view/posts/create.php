@@ -26,7 +26,7 @@ require_once 'view/partial/header.php';
 <main>
     <h2>Créer un nouveau post</h2>
 
-    <form action="index.php" method="POST">
+    <form action="index.php" method="POST" enctype="multipart/form-data">
         <div>
             <label for="title">Titre :</label><br>
             <input type="text" id="title" name="title" required>
@@ -42,8 +42,9 @@ require_once 'view/partial/header.php';
         <br>
 
         <div>
-            <label for="image_path">Chemin de l'image (prévu pour plus tard) :</label><br>
-            <input type="text" id="image_path" name="image_path" placeholder="uploads/image.jpg">
+            <label for="media">Image ou vidéo :</label><br>
+            <input type="file" id="media" name="media">
+            <small>Formats acceptés : jpg, png, mp4, mov (Max 10Mo)</small>
         </div>
 
         <br>

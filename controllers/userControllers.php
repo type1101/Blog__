@@ -32,7 +32,7 @@ require_once 'config/database.php';
     On charge le modèle.
 */
 require_once 'models/userModels.php';
-
+require_once 'models/postModels.php';
 /*
     On prépare une variable d'erreur vide.
     Elle servira si la connexion échoue.

@@ -32,6 +32,7 @@
 */
 session_start();
 
+
 /*
     On appelle le contrôleur principal.
     C'est lui qui va décider quoi faire :
@@ -43,4 +44,5 @@ session_start();
     - gérer la déconnexion
 */
 require_once 'controllers/userControllers.php';
+require_once 'controllers/postControllers.php';
 ?>

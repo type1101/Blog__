@@ -55,11 +55,21 @@ require_once 'view/partial/header.php';
                     Si une image existe, on l'affiche.
                     Cela prépare déjà l'évolution future vers l'ajout d'images.
                 */
+                $video = strtolower(pathinfo($post['image_path'], PATHINFO_EXTENSION));
+
                 if ($post['image_path'] != null && $post['image_path'] != '') {
-                    ?>
-                    <img src="<?php echo htmlspecialchars($post['image_path']); ?>" alt="Image du post">
-                    <?php
+                    if ($video == 'mp4' || $video == 'mov') {
+                        ?>
+                        <video class="video" controls = "controls" src="<?php echo htmlspecialchars($post['image_path']); ?>"></video>
+                        <?php
+                    } else {
+                        ?>
+                        <img src="<?php echo htmlspecialchars($post['image_path']); ?>" alt="Image du post">
+                        <?php
+                    }
                 }
+
+
                 ?>
             </article>
             <?php
