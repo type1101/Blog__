@@ -44,6 +44,7 @@ function getAllPosts($pdo)
             posts.content,
             posts.image_path,
             posts.created_at,
+            posts.user_id,
             users.username
         FROM posts
         INNER JOIN users ON posts.user_id = users.id
@@ -94,4 +95,33 @@ function createPost($pdo, $title, $content, $media , $user_id)
     */
     $statement->execute([$title, $content, $media, $user_id]);
 }
+
+function deletePost($pdo, $post_id, $user_id)
+{
+    /*
+        On prépare une requête SQL pour supprimer le post.
+        On vérifie aussi que le post appartient bien à l'utilisateur (sécurité).
+    */
+    $sql = "
+        DELETE FROM posts
+        WHERE id = ? AND user_id = ?
+    ";
+
+    /*
+        On prépare la requête.
+    */
+    $statement = $pdo->prepare($sql);
+
+    /*
+        On exécute la requête avec l'ID du post et l'ID de l'utilisateur.
+    */
+    $statement->execute([$post_id, $user_id]);
+
+    /*
+        On retourne le nombre de lignes supprimées.
+        Si c'est 0, c'est que l'utilisateur n'est pas propriétaire du post.
+    */
+    return $statement->rowCount();
+}
 ?>
+
