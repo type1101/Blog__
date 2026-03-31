@@ -68,34 +68,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'createPost') {
     SUPPRESSION D'UN POST
     --------------------------------------------------------
 */
-if (isset($_GET['action']) && $_GET['action'] == 'deletePost') {
-
-    /*
-        On vérifie que l'utilisateur est connecté.
-    */
+if ($action == 'deletePost' && isset($_GET['post_id'])) {
+    
     if (isset($_SESSION['user'])) {
-
-        /*
-            On récupère l'ID du post à supprimer.
-        */
-        $post_id = isset($_GET['post_id']) ? (int)$_GET['post_id'] : null;
-
-        if ($post_id) {
-            /*
-                On appelle la fonction de suppression.
-                Elle vérifie aussi que l'utilisateur est propriétaire du post.
-            */
-            $deleted = deletePost($pdo, $post_id, $_SESSION['user']['id']);
-
-            if ($deleted > 0) {
-                /*
-                    La suppression a réussi.
-                    On redirige vers l'accueil.
-                */
-                header('Location: index.php');
-                exit();
-            }
-        }
+        $post_id = (int)$_GET['post_id'];
+        deletePost($pdo, $post_id, $_SESSION['user']['id']);
+        header('Location: index.php');
+        exit();
     } else {
         header('Location: index.php?action=showLogin');
         exit();
