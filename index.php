@@ -49,7 +49,20 @@ require_once 'config/database.php';
 require_once 'controllers/postControllers.php';
 require_once 'controllers/userControllers.php';
 
+$action = $_GET['action'] ?? 'showPosts';
 
+switch ($action) {
+    case 'showCreate':
+        require_once 'view/posts/create.php';
+        break;
+
+    default:
+        $posts = getAllPosts($pdo);
+        require_once 'view/posts/post.php';
+        break;
+}
+
+/*
 if (isset($_GET['action']) && $_GET['action'] == 'showCreate') {
     require_once 'view/posts/create.php';
 } 
@@ -58,3 +71,4 @@ else {
     require_once 'view/posts/post.php';
 }
 ?>
+*/
