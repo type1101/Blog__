@@ -1,7 +1,6 @@
 <?php
 require_once 'models/postModels.php';
 
-$errorMessage = '';
     /*
         --------------------------------------------------------
         FORMULAIRE DE CRÉATION DE POST
@@ -28,8 +27,7 @@ $errorMessage = '';
 
             if (isset($_FILES['media']) && $_FILES['media']['error'] == 0) {
                 if ($_FILES['media']['size'] > $maxSizeFile) {
-                    $errorMessage = "Le fichier est trop volumineux";
-                    require_once 'view/posts/create.php';
+                    header('Location: index.php?action=showCreate&error=too_big');
                     exit();
                 }
 

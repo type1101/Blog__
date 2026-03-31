@@ -46,14 +46,46 @@ session_start();
 
 require_once 'config/database.php';
 
+require_once 'models/postModels.php';
+
 require_once 'controllers/postControllers.php';
 require_once 'controllers/userControllers.php';
+
+
+$errorMessage = '';
+
+if (isset($_GET['error']) && $_GET['error'] == 'too_big') {
+    $errorMessage = "Le fichier est trop volumineux (10 Mo max).";
+}
+
+
+$errorMessage = '';
+
+// Centralisation de TOUS les messages d'erreur (Post et User)
+if (isset($_GET['error'])) {
+    switch ($_GET['error']) {
+        case 'too_big': $errorMessage = "Le fichier est trop volumineux (10 Mo max)."; break;
+        case 'pass_wrong': $errorMessage = "Mot de passe incorrect."; break;
+        case 'email_not_found': $errorMessage = "Aucun compte trouvé avec cet email."; break;
+        case 'email_exist': $errorMessage = "Cet email est déjà utilisé."; break;
+        case 'pass_short': $errorMessage = "Le mot de passe doit faire au moins 6 caractères."; break;
+        case 'pass_no_match': $errorMessage = "Les mots de passe ne sont pas identiques."; break;
+        case 'empty': $errorMessage = "Veuillez remplir tous les champs."; break;
+    }
+}
+
 
 $action = $_GET['action'] ?? 'showPosts';
 
 switch ($action) {
     case 'showCreate':
         require_once 'view/posts/create.php';
+        break;
+    case 'showLogin':
+        require_once 'view/users/login.php';
+        break;
+    case 'showRegister':
+        require_once 'view/users/register.php';
         break;
 
     default:

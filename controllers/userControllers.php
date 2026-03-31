@@ -26,77 +26,47 @@
 /*
     On charge la connexion à la base de données.
 */
-require_once 'config/database.php';
+/*require_once 'config/database.php';*/
 
 /*
     On charge le modèle.
 */
 require_once 'models/userModels.php';
-require_once 'models/postModels.php';
+/*require_once 'models/postModels.php';*/
 /*
     On prépare une variable d'erreur vide.
     Elle servira si la connexion échoue.
 */
-$errorMessage = '';
+/*$errorMessage = '';*/
 
 /*
     ============================================================
     1. GESTION DES ACTIONS EN GET
     ============================================================
 */
-if (isset($_GET['action'])) {
 
-    /*
-        Si l'utilisateur demande le formulaire de connexion,
-        on affiche la vue login.php.
-    */
-    if ($_GET['action'] == 'showLogin') {
-        require_once 'view/users/login.php';
-        exit();
-    }
-
-    if($_GET['action'] == 'showRegister'){
-        require_once 'view/users/register.php';
-        exit();
-    }
-
-    /*
-        Si l'utilisateur demande le formulaire de création,
-        on vérifie d'abord qu'il est connecté.
-    */
-    else if ($_GET['action'] == 'showCreate') {
-
-        if (isset($_SESSION['user'])) {
-            require_once 'view/posts/create.php';
-            exit();
-        } else {
-            header('Location: index.php?action=showLogin');
-            exit();
-        }
-    }
 
     /*
         Si l'utilisateur demande la déconnexion,
         on détruit les informations de session.
     */
-    else if ($_GET['action'] == 'logout') {
+if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 
         /*
             On vide le tableau de session.
         */
-        $_SESSION = [];
+    $_SESSION = [];
 
         /*
             On détruit la session.
         */
-        session_destroy();
+    session_destroy();
 
         /*
             On redirige vers l'accueil.
         */
-        header('Location: index.php');
-        exit();
-    }
+    header('Location: index.php');
+    exit();
 }
 
 /*
@@ -157,8 +127,7 @@ if (isset($_POST['action'])) {
                 /*
                     Le mot de passe est faux.
                 */
-                $errorMessage = 'Mot de passe incorrect.';
-                require_once 'view/users/login.php';
+                header('Location: index.php?action=showLogin&error=pass_wrong');
                 exit();
             }
 
@@ -166,8 +135,7 @@ if (isset($_POST['action'])) {
             /*
                 Aucun utilisateur ne correspond à cet email.
             */
-            $errorMessage = 'Aucun utilisateur trouvé avec cet email.';
-            require_once 'view/users/login.php';
+            header('Location: index.php?action=showLogin&error=email_not_found');
             exit();
         }
     }
@@ -214,21 +182,23 @@ if (isset($_POST['action'])) {
 
                     
                 } else if (strlen($password) < 6) {
-                    $errorMessage = 'Le mot de passe doit contenir au moins 6 caractères.';
+                    header('Location: index.php?action=showRegister&error=pass_short');
+                    exit();
                 } else {
-                    $errorMessage = 'Les mots de passe ne correspondent pas.';
+                    header('Location: index.php?action=showRegister&error=pass_no_match');
+                    exit();
                 }
 
             } else {
-                $errorMessage = 'Veuillez remplir tous les champs.';
+                header('Location: index.php?action=showRegister&error=empty');
+                exit();
             }
 
         } else {
             /*
                 Aucun utilisateur ne correspond à cet email.
             */
-            $errorMessage = 'email deja existant.';
-            require_once 'view/users/register.php';
+            header('Location: index.php?action=showRegister&error=email_exist');
             exit();
         }
     }
@@ -244,10 +214,13 @@ if (isset($_POST['action'])) {
 /*
     On récupère tous les posts.
 */
+/*
 $posts = getAllPosts($pdo);
 
 /*
     On affiche la vue principale.
-*/
+
 require_once 'view/posts/post.php';
+*/
+
 ?>
