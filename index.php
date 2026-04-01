@@ -54,7 +54,6 @@ require_once 'controllers/userControllers.php';
 
 $errorMessage = '';
 
-// Centralisation de TOUS les messages d'erreur (Post et User)
 if (isset($_GET['error'])) {
     switch ($_GET['error']) {
         case 'too_big': $errorMessage = "Le fichier est trop volumineux (10 Mo max)."; break;

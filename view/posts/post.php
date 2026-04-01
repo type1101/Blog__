@@ -27,6 +27,12 @@ require_once 'view/partial/header.php';
 <main>
     <h2>Liste des publications</h2>
 
+
+    <?php 
+    $nb_posts = count($posts);
+    echo "<p>Nombre de posts : " . $nb_posts . "</p>";
+    ?>
+
     <?php
     /*
         On vérifie s'il existe au moins un post.
